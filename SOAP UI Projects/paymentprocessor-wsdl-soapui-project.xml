@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="22c87dbe-571f-4919-8c2c-57c7723e352b" activeEnvironment="Default" name="paymentprocessor?wsdl" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="90f772ce-05e6-4249-9468-dbbecd424712" wsaVersion="NONE" name="PaymentProcessorImplServiceSoapBinding" type="wsdl" bindingName="{http://soap.ws.bharath.com/}PaymentProcessorImplServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/paymentprocessor?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/paymentprocessor?wsdl"><con:part><con:url>http://localhost:8080/paymentprocessor?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="PaymentProcessorImplService" targetNamespace="http://soap.ws.bharath.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.ws.bharath.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://soap.ws.bharath.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="processPayment" type="tns:processPayment"/>
+      <xs:element name="processPaymentResponse" type="tns:processPaymentResponse"/>
+      <xs:complexType name="processPayment">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="paymentProcessorRequest" type="tns:PaymentProcessorRequest"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentProcessorRequest">
+        <xs:sequence>
+          <xs:element name="creditCardInfo" type="tns:CreditCardInfo"/>
+          <xs:element minOccurs="0" name="amount" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreditCardInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="address" type="xs:string"/>
+          <xs:element minOccurs="0" name="cardNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="expirtyDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="secCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="processPaymentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="response" type="tns:PaymentProcessorResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentProcessorResponse">
+        <xs:sequence>
+          <xs:element name="result" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="processPayment">
+    <wsdl:part element="tns:processPayment" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processPaymentResponse">
+    <wsdl:part element="tns:processPaymentResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PaymentProcessor">
+    <wsdl:operation name="processPayment">
+      <wsdl:input message="tns:processPayment" name="processPayment"></wsdl:input>
+      <wsdl:output message="tns:processPaymentResponse" name="processPaymentResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentProcessorImplServiceSoapBinding" type="tns:PaymentProcessor">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="processPayment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="processPayment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="processPaymentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentProcessorImplService">
+    <wsdl:port binding="tns:PaymentProcessorImplServiceSoapBinding" name="PaymentProcessorImplPort">
+      <soap:address location="http://localhost:8080/paymentprocessor"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/paymentprocessor</con:endpoint></con:endpoints><con:operation id="a19e2d3c-443c-4285-94b0-b77ef93ce8dd" isOneWay="false" action="" name="processPayment" bindingOperationName="processPayment" type="Request-Response" outputName="processPaymentResponse" inputName="processPayment" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e4d56df6-49b9-466b-bc47-d221bef37d90" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/paymentprocessor</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.bharath.com/">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\r
+         <wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+            <wsse:Username>cxf</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">cxf</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <soap:processPayment>\r
+         <!--Optional:-->\r
+         <paymentProcessorRequest>\r
+            <creditCardInfo>\r
+               <!--Optional:-->\r
+               <address>My addres</address>\r
+               <!--Optional:-->\r
+               <cardNumber>4444666655557777</cardNumber>\r
+               <!--Optional:-->\r
+               <expirtyDate>2019-12-29+06:00</expirtyDate>\r
+               <!--Optional:-->\r
+               <firstName>Luis</firstName>\r
+               <!--Optional:-->\r
+               <lastName>Arguijo</lastName>\r
+               <!--Optional:-->\r
+               <secCode>123</secCode>\r
+            </creditCardInfo>\r
+            <!--Optional:-->\r
+            <amount>1000</amount>\r
+         </paymentProcessorRequest>\r
+      </soap:processPayment>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.ws.bharath.com/PaymentProcessor/processPayment"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
