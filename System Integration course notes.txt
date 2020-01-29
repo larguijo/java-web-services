@@ -1,0 +1,432 @@
+- Refresh projects after create a new one.
+- Edit form.
+
+- Roles (Resolutor, Usuario, Admin).
+- Categoria y subcategoria
+
+
+To Add:
+SOA documentation
+
+WEB SERVICES - BIG PICTURE
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+JAX-WS > Java API for XMLbased  Web Services
+JAX-RS > Java API for RESTful Web Services
+
+Consumer > Provider
+
+SOA: Architectural Principles.
+- Services
+- Loosely Coupled
+W3C mantains standard.
+
+Roles:
+Provider.
+Consumer.
+As long as the contract or interface remains the same, we can replace the components.
+
+Contract:
+SOAP: WSDL
+REST: WADL
+XML: Data format
+
+Advantages:
+- Platform independent.
+- Focused developer roles
+- Loosely coupled.
+- Reusability.
+- Cost reduction
+- Scalabity.
+
+WS is an implementation of SOA
+
+Before WS
+- Corba
+- DCOM
+- Java RMI
+- Messaging
+
+------------------------------------XML----------------------------------------
+-------------------------------------------------------------------------------
+- Data + metadata
+- Format validation
+
+XML schema definition (XSD): Grammar for XML document (Elements, attributes, namespaces, order, number of ocurrences, restrictions)
+
+Elements vs attributes?
+XML = eXtensible Markup Language.
+Used to transfer information or configuration
+Well formed rules.
+
+XSD: Contract between Provider and Consumer.
+
+WS Pros
+- Platform independent
+
+Cons
+- Ambiguous Web Service Standards.
+- Performance Impat due to Serialization - deserialization
+
+WHEN?
+- Formal contract is required. (WSDL)
+- Non funtional requirement (Security, Transaction Management).
+- Reliable Asynchronous Processing.
+
+SOAP: Simple Object Access Protocol (Current version 1.2)
+Standard defined by W3C.
+- Envelope
+- Header
+- Body
+- Fault
+
+<soap:Envelope>
+<soap:header/>
+<soap:Body>
+....
+</soap:Body>
+</soap:Envelope>
+
+<soap:Body>
+	<soap:Fault>
+		<soap:code>soap:Server</soap:code>
+		<soap:Reason>
+			<soap:text>
+				Error message (Card Expired)
+			</soap:text>
+		</soap:Reason>
+	</soap:Fault>
+</soap:Body>
+
+WSDL: Web Service Definition Language.
+It's the contract.
+- What it provides.
+- How it providesit.
+
+Definitions
+	- Types
+	- Messages (parameters)
+	- Operations (methods)
+	- Port types (container for operation)
+	- Binding
+	- Service (location)
+	
+wsdl:definition
+
+APPROACHES TO CREATE WS.
+- Contract First Design (top down)
+	- Create WSDL file.
+	- Generate Java stubs using tools like wsdl2Java
+	- Implement the webservice endpoint.
+	- Advantages:
+		- Contract with the consumer is signed off.
+		- Better Interoperability.
+- Code First Design (bottom up)
+	- Write Java and Annotate.
+	- Generate the WSDL from code using java2wsdl
+	- Advantages:
+		- Legacy application.
+
+Use contract first as much as possible, unless we're working with an existing service to generate wsdl from code.		
+
+JAX-WS
+	- Specification (CXF)
+	- API
+		- Annotations
+		
+The owner of JAX-WS API is Oracle
+
+@javax.jws.WebService to indicate a class is a servie.
+@javax.jws.WebMethod
+
+@WebResult(name="order") Order getOrder (@WebParam(name="orderId") Long orderId)
+
+@javax.xml.ws.WebFault
+MyException extends Exception
+
+@javax.jws.soap.SOPABinding > document/literal
+@SOAPBinding(style=Style.RPC, use=Use.LITERAL)
+public interface OrderService
+
+JAXB = Java Architecture for XML Binding
+Maps XML to Java objects.
+JAXB is to XML what Hibernate is to SQL.
+Java ---> JAXB ---> XML
+
+JAXB TOOLS
+XML Schema --> XJC ---> Java Classes
+Java Classes --> SCHEMAGEN ---> XML Schema.
+Java Object --> Runtime API --> XML
+
+RUNTIME API
+- Marshall
+- Unmarshall
+- Annotations
+
+Pluging to Generate classes from schema https://mvnrepository.com/artifact/org.jvnet.jaxb2.maven2/maven-jaxb2-plugin
+
+XML Schema to JAXB Classes
+- Create projects
+- Create schemas
+- Use JAXB plugin
+
+Marshalling: Converting Java objects to XML
+Unmarshalling: Converting XML to Java Objects
+
+Important:
+Before creating project 
+- Set environment variables.
+- Install new maven version https://maven.apache.org/download.cgi
+- Go to Window > Preferences
+	- Look for Maven > installations: Select downloaded maven instance instead of embedded one.
+	- Look for Maven > User Settings: Point global settings and user settings to settings.xml inside maven version.
+	
+APACHE CXF
+- Allows to create consumers and providers.
+- SOAP/REST Engine
+	- Serialize and De-serialize
+	- Publish and Dispatch.
+	
+XML > SOAP/REST Engine > Java Object > WS Enpoint Method.
+
+Tools
+- WSDL2Java
+- Java2Wsdl
+
+Apache CXF
+- Implements JAX-WS
+- WS Standards
+- SOAP Engine
+- Tools
+
+- File > New > Spring Starter Project.
+- SOAP dependency should be added manually to maven
+https://mvnrepository.com/artifact/org.apache.cxf/cxf-spring-boot-starter-jaxws/3.3.4
+
+WSDL first Server:
+1. Create WSDL file
+2. Generate Stubs
+3. Implement the endpoint by implementing the interfaces generated.
+4. Publish the endpoint.xc
+
+SOAP Client
+1. pom.xml (Add cxf plugins)
+2. Generate stubs from wsdl
+3. Standalone client
+4. Service Provider Mechanism
+
+Javafirst or codefirst WS
+1. Annotate endpoints and beans with jaxb annotation
+2. Publish endpoints.
+
+WS-Security
+- Authentication
+	- User Name Token Profile
+	- X 508 Certificates
+	- SAML
+- Encryption and Decryption
+
+
+- MTOM - Exchange files
+- WS-addressing - Asynchronous callbacks
+- WS-Policy- assert and mandate rules to consume WS.
+- WS-SecureConversation: Negotiate key at the beginning.
+- WS-SecurityPolicy
+
+WSS4J -> Web Service Security for Java.
+Add dependency
+Configure Interceptors
+Create callback	
+
+MTOM = Message Transmition and Optimization Mechanism
+Exchange files.
+WS attachments (legacy)
+
+DataHandler attachinfo;
+
+JAX-WS Handlers (like middlewares?)
+SOAP handlers (to modify XML message)
+Logical Handlers (Payload only)
+
+getHeaders (Logical)
+handleMessage (SOAP & Logical)
+handleFault (SOAP & Logical)
+close (SOAP & Logical)
+
+SOAP Fault
+<faultCode>
+	- Version Mismatch
+	- Must Understand
+	- Client
+	- Server
+<faultString>
+<faultActor>
+
+REST --> Representation State Transfer.
+	- Uniform Interface and easy access.
+HTTP methods:
+	- POST
+	- GET
+	- PUT
+	- DELETE
+Statelessness
+
+Keys
+	- Single http interface
+	- Multiple Data formats.
+	- Scalabity
+	
+When to use REST?
+- Well defined Contract Exists (because we don't have way to express contract).
+- Multiple Data Format.
+- Bandwidth and Memory
+- Caching.
+
+JAX-RS
+- Specification (Apache CXF, Jersey)
+- API 
+
+JAXRS annotation 
+
+URI mapping
+- @Path("/users/{username}")
+
+HTTP Methods
+@Get
+@Post
+@Put
+@Delete
+
+DATA FORMAT
+@Consumes("text/plain")
+@Produces({"application/json", "application/xml"})
+
+PARAMS
+@PathParam
+@QueryParam
+@FormParam
+
+EXCEPTIONS
+@Provider
+
+
+Creating service
+
+@XMLRootElement
+Patient.java (Bean to be searialized and deserialized)
+
+@Path(name="/patienceService")
+interface PatientService
+	@Path("/patients/{id}")
+	@Get
+	list<Patient> getPatients(@PathParam=(name=id) id...)
+
+
+	@Path("/patients")
+	@POST
+	Response createPatient(Patient patient)
+		return Response.ok(patient).build();
+		
+		Response.notModified().build(); // for update not found.
+		
+@Service  (Spring annotation)
+PatientServiceImpl
+
+JSON support.
+Apache CXF has default support for XML, it automatically serialize/deserialize from/to XML.
+
+You have to:
+	- Add Jackson dependencies: (jackson-jaxr maven)
+		- Jackson-jaxrs
+		- Jackson-xc
+	- Change the configuration (Spring boot properties).
+		- cxf.jaxrs.class-scan=true
+		- cxf.jarx.classes-scan-package=org.codehaus.jackson.jaxrs, com.your.name.spaces
+	- Use @Consumes and @Produces.
+		- On the Service Interface
+			@Consumes("application/xml, application/json")
+			@Produces("application/xml, application/json")
+			@Path("/patienceService")
+			public interface PatientService {}
+		- It can also be used at the method level.
+		
+In the client side, we have to send the header "accept: application/json". If the header is not included, the server will respond with an XML.
+
+DESING & IMPLEMENT REST
+- Identify Resources
+- Create URI
+- Assign HTTP Methods
+- Choose data formats.
+
+ERRORS:
+- Standar errors
+- Application Errors.
+
+javax.ws.rs
+	BadRequestException (400)
+	NotAuthorizedException (401)
+	ForbiddenException (403)
+	InternalServerException (500)
+	ServiceUnavailableException (503)
+	
+	throw new WebApplicationException(Response.Status.BAD_REQUEST)
+	throw new BadRequestException()
+	
+Generic exceptions can be handled though implementing a	ExceptionMapper.
+they should be annotated with  @Provider
+
+REST Client
+Options:
+- Java.net.URL
+- Apache HTTPClient lib
+- JAX-RS Client API (CXF)
+
+JAX-RS Client API
+	- ClientBuilder
+	- Client
+	- WebTarget (Points to a resource)
+	- Invoker.Builder
+	- Entity (representation of exchanged data)
+
+Maven cxf-rest-client	
+
+// Code to run a client.
+Client client = ClientBuilder.newClient();
+WebTarget target = client.target(YOUR_PATH).path("patients").path("{id}")
+target.resolveTemplate("id",your_value);
+Builder request = target.request();
+Response response = request.get(ClassName.class);
+
+Different param Types
+- @QueryParam defined at the interface level.
+- @FormParam (In @Consumes add application/x-www-form-urlencoded)
+- @HeaderParam
+
+ASYNCHRONOUS
+- Provider	
+	- @javax.ws.rs.container.Suspended
+	- javax.ws.rs.container.AsyncResponse
+- Client
+	- javax.ws.rs.client.AsyncInvoker
+	- javax.util.concurrent.Future
+	- javax.ws.rs.client.InvocationCallback
+	
+- Mark the method with AsyncResponse (this will be a parameter) and @Suspended.
+- Return a void.	
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
