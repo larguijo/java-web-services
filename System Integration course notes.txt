@@ -415,6 +415,88 @@ ASYNCHRONOUS
 - Mark the method with AsyncResponse (this will be a parameter) and @Suspended.
 - Return a void.	
 
+SPRING SECURITY
+- In pom.xml dependencies section add spring-boot-starter-security
+
+UPLOADING FILES
+@Path("/fileservice")
+class FileService{
+	public void upload(List<Attachements> attachments){
+		for attachement in attachments {
+			
+		}
+	}
+}
+
+JERSEY
+- Oracle implementation
+- JAX-RS standar implementation.
+- Servlet support
+- Security
+- Bean Validation
+
+SPRING MVC
+- @RequestMapping ==> @Path
+- @PathVariable --> @PathParam
+It doesn't use RS-WS
+
+Client --> Dispatcher Serveler --> Handler Mapping --> Controller
+
+artifactIds > 
+- spring-webmvc
+- jackson-core
+- jackson-annotation
+
+In the web.xml 
+- Define the servlet class as org.springframework.web.servlet.DispatcherServlet.
+
+@RestController //To create a controller using spring.
+@RequestMapping("/greeting")
+public class MyController {
+	@RequestMapping(value="/{name}, method=RequestMethod.GET
+	public String sayHello(@PathVariable String name)
+		return "hello"
+	}
+}
+
+In xxx-servlet.xml
+<Context.component-scan base-package="your.package.name" />
+<mvc:anototation-driven/>
+
+DATABASE CONNECTION
+apring.datasource.url-jdbc:mysql://localhost:3306/mydb
+
+
+Assignment.
+
+There is store that rents video games and they want to create an API to register games in their inventory.
+They new to store:
+- ID 
+- Name 
+- Company that produces the video game.
+- Category (Cars, fight, violence, adventure) More than one category is allowed (assume no catalog is needed and store them as tags)
+  It needs to define at least one category.
+It also wants to list the main characters of each game like this (at least one is required):
+- Name
+- Role (main, secondary)
+- URL to character image.
+
+API requirements:
+- Must be able to perform this operatios on video games: add, modify, delete, search one and search by category
+- Must be able to add, modify or delete characters.
+- Must be a RESTful API that accepts either XML or JSON.
+- You are free to use the library of your preference (CXF, Jersey, Spring).
+- You can have an in-memory data base (Connection to a DB is a plus).
+- Respect naming convention and use of verbs (http methods)
+- Testable though POSTman and a REST Client (optional to implement all the methods, GET and POST is OK).
+- Put your code in a repo in github.
+- You can add as many features or validations on top of what is requested (optional)
+
+
+
+
+
+
 
 
 	
